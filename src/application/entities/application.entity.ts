@@ -1,4 +1,6 @@
+import { template } from 'handlebars';
 import { type } from 'os';
+import { Template } from 'src/template/entities/template.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Status } from 'src/utils/app-constants.utils';
 import {
@@ -7,6 +9,7 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -19,18 +22,21 @@ export class Application extends BaseEntity {
   @Column()
   name: string;
 
-  @Column({type: 'text'})
+  @Column({ type: 'text' })
   description: string;
 
-  @Column({default: true, name: "is_active"})
+  @Column({ default: true, name: 'is_active' })
   isActive: boolean;
 
-  @ManyToOne(type => User, user => user.id)
+  @ManyToOne((type) => User, (user) => user.id)
   user: User;
 
-  @CreateDateColumn({ type: 'timestamptz', name : "created_at" })
+  @OneToMany((type) => Template, (template) => template.applicaiton)
+  template: Template[];
+
+  @CreateDateColumn({ type: 'timestamptz', name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz', name : "updated_at" })
+  @UpdateDateColumn({ type: 'timestamptz', name: 'updated_at' })
   updatedAt: Date;
 }

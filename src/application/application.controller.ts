@@ -1,9 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { ApplicationService } from './application.service';
 import { CreateApplicationDto } from './dto/create-application.dto';
 import { UpdateApplicationDto } from './dto/update-application.dto';
+import * as config from 'config';
 
-@Controller('application')
+const versionConfig = config.get('version');
+
+@Controller(`/api/${versionConfig}/application`)
 export class ApplicationController {
   constructor(private readonly applicationService: ApplicationService) {}
 
@@ -27,7 +30,7 @@ export class ApplicationController {
     return this.applicationService.update(id, updateApplicationDto);
   }
 
-  @Delete(':id')
+  @Patch(':id')
   remove(@Param('id') id: string) {
     return this.applicationService.toggleApplication(id);
   }

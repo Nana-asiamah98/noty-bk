@@ -22,3 +22,5 @@ mailer:
   auth:
     user: 'nastudio96@gmail.com'
     password: 'ptdbiexnmrfjklfr'
+
+version: 'v1'

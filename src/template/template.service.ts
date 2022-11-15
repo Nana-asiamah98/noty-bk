@@ -1,26 +1,99 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { Exception } from 'handlebars';
+import { ApplicationService } from 'src/application/application.service';
+import { Application } from 'src/application/entities/application.entity';
+import { User } from 'src/user/entities/user.entity';
+import { UserService } from 'src/user/user.service';
 import { CreateTemplateDto } from './dto/create-template.dto';
 import { UpdateTemplateDto } from './dto/update-template.dto';
+import { Template } from './entities/template.entity';
+import { TemplateRepository } from './template.repository';
 
 @Injectable()
 export class TemplateService {
-  create(createTemplateDto: CreateTemplateDto) {
-    return 'This action adds a new template';
+  private logger = new Logger(TemplateService.name);
+  constructor(
+    private templateRepository: TemplateRepository,
+    private readonly userService: UserService,
+    private readonly applicationService: ApplicationService,
+  ) {}
+  async create(createTemplateDto: CreateTemplateDto): Promise<Template> {
+    const { name, templateDescription, userId, applicationId } =
+      createTemplateDto;
+
+    const user : User  = await this.userService.findOne(userId);
+    const application : Application = await this.applicationService.findOne(applicationId);
+
+    const createdTemplate = await this.templateRepository.save({
+      name,
+      templateDescription,
+      user,
+      application,
+    });
+
+    this.logger.verbose('Template Has Been Created Successfully');
+    delete createdTemplate.user;
+    delete createdTemplate.applicaiton;
+    console.log(createdTemplate)
+    return createdTemplate;
   }
 
-  findAll() {
-    return `This action returns all template`;
+  async findAll(): Promise<Template[] | null> {
+    const templates: Template[] = await this.templateRepository.find({
+      order: {
+        name: 'DESC',
+      },
+      relations: {
+        user: true,
+        applicaiton: true,
+      },
+    });
+    return templates;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} template`;
+  async findOne(id: string): Promise<Template> {
+    const template: Template = await this.templateRepository.findOneBy({
+      id: id,
+    });
+    if (!template) {
+      throw new Exception(`There is no template with the ID ${id}`);
+    }
+    return template;
   }
 
-  update(id: number, updateTemplateDto: UpdateTemplateDto) {
-    return `This action updates a #${id} template`;
+  async update(id: string, updateTemplateDto: UpdateTemplateDto) {
+    const { name, templateDescription, userId, applicationId, isActive } =
+      updateTemplateDto;
+
+    const isTemplate: Template | boolean = (await this.findOne(id)) ?? false;
+
+    if (isTemplate) {
+      const application: Application = await this.applicationService.findOne(
+        applicationId,
+      );
+      isTemplate.name = name;
+      isTemplate.applicaiton = application;
+      isTemplate.isActive = isActive;
+      isTemplate.templateDescription = templateDescription;
+      const updatedTemplate: Template = await this.templateRepository.save(
+        isTemplate,
+      );
+      this.logger.verbose('Template Has Been Created Successfully');
+      return updatedTemplate;
+    }
+
+    return new Template();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} template`;
+  async activeToggle(id: string): Promise<Template | boolean> {
+    const template: Template | boolean = (await this.findOne(id)) ?? false;
+
+    if (template) {
+      template.isActive = !template.isActive;
+      this.templateRepository.save(template);
+      return template.isActive;
+    }
+
+    return template;
   }
 }

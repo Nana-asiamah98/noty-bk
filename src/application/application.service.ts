@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Exception } from 'handlebars';
+import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
 import { ApplicationRepository } from './application.repository';
 import { CreateApplicationDto } from './dto/create-application.dto';
+import { FetchApplicationDTO } from './dto/fetch-application.dto';
 import { UpdateApplicationDto } from './dto/update-application.dto';
 import { Application } from './entities/application.entity';
 
@@ -28,16 +30,29 @@ export class ApplicationService {
     return savedApplication;
   }
 
-  async findAll(): Promise<Application[] | null> {
+  async findAll(): Promise<FetchApplicationDTO[] | []> {
     const apps: Application[] = await this.applicationRepository.find({
       order: {
         name: 'ASC',
       },
       relations: {
         user: true,
+        template: true,
       },
     });
-    return apps;
+    const fetchApplicationDTO: FetchApplicationDTO[] | [] = apps
+      ? apps.map((app) => {
+          const { id, name, description, isActive, template } = app;
+          let fetchDto: FetchApplicationDTO = new FetchApplicationDTO();
+          fetchDto.id = id;
+          fetchDto.name = name;
+          fetchDto.description = description;
+          fetchDto.isActive = isActive;
+          fetchDto.template = template;
+          return fetchDto;
+        })
+      : [];
+    return fetchApplicationDTO;
   }
 
   findOne(id: string): Promise<Application> {
@@ -55,9 +70,11 @@ export class ApplicationService {
   ): Promise<Application | null> {
     const application: Application = await this.findOne(id);
     if (application) {
-      const { name, description } = updateApplicationDto;
+      const { name, description, userId } = updateApplicationDto;
       application.name = name;
       application.description = description;
+      const user: User = await this.userService.findOne(userId);
+      application.user = user;
       return this.applicationRepository.save(application);
     }
     return new Application();

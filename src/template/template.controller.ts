@@ -2,8 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { TemplateService } from './template.service';
 import { CreateTemplateDto } from './dto/create-template.dto';
 import { UpdateTemplateDto } from './dto/update-template.dto';
+import * as config from 'config';
 
-@Controller('template')
+const versionConfig = config.get('version');
+
+@Controller(`/api/${versionConfig}/template`)
 export class TemplateController {
   constructor(private readonly templateService: TemplateService) {}
 
@@ -19,16 +22,16 @@ export class TemplateController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.templateService.findOne(+id);
+    return this.templateService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTemplateDto: UpdateTemplateDto) {
-    return this.templateService.update(+id, updateTemplateDto);
+    return this.templateService.update(id, updateTemplateDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.templateService.remove(+id);
+    return this.templateService.activeToggle(id);
   }
 }
