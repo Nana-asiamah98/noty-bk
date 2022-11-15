@@ -32,9 +32,6 @@ export class TemplateService {
     });
 
     this.logger.verbose('Template Has Been Created Successfully');
-    delete createdTemplate.user;
-    delete createdTemplate.applicaiton;
-    console.log(createdTemplate)
     return createdTemplate;
   }
 
