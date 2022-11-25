@@ -8,7 +8,7 @@ import { UserModule } from 'src/user/user.module';
 @Module({
   imports: [UserModule],
   controllers: [ApplicationController],
-  providers: [ApplicationService,ApplicationRepository],
-  exports: [ApplicationService]
+  providers: [ApplicationService, ApplicationRepository],
+  exports: [ApplicationService],
 })
 export class ApplicationModule {}

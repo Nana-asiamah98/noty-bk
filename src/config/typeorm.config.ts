@@ -1,15 +1,13 @@
-import { TypeOrmModule } from '@nestjs/typeorm';
-import * as config from 'config';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
+import configuration from './configuration';
+import dbConfiguration from './configuration';
 
-const dbConfig = config.get('db');
+const dbConfig: any = dbConfiguration;
+export const { db } = dbConfig;
 
-export const typeormConfig: TypeOrmModule = {
-  type:  dbConfig.type,
-  host: dbConfig.host,
-  port: dbConfig.port,
-  username: dbConfig.username,
-  password: dbConfig.password,
-  database:  dbConfig.database,
+export default new DataSource({
+  ...dbConfiguration["db"],
   entities: [__dirname + '/../**/*.entity.{ts,js}'],
-  synchronize: dbConfig.synchronize,
-};
+  migrations: [__dirname + '/../**/migrations/*.{ts,js}'],
+});

@@ -1,6 +1,3 @@
-import { type } from 'os';
-import { Application } from 'src/application/entities/application.entity';
-import { User } from 'src/user/entities/user.entity';
 import {
   BaseEntity,
   Column,
@@ -8,8 +5,10 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
+  UpdateDateColumn
 } from 'typeorm';
+import { Application } from '../../application/entities/application.entity';
+import { User } from '../../user/entities/user.entity';
 
 @Entity('tbl_template')
 export class Template extends BaseEntity {
@@ -22,14 +21,14 @@ export class Template extends BaseEntity {
   @Column({ name: 'template_description', type: 'text' })
   templateDescription: string;
 
-  @Column({ name: 'is_active', type: 'boolean', default: true })
-  isActive: boolean;
-
   @ManyToOne((type) => User, (user) => user.id)
   user: User;
 
   @ManyToOne((type) => Application, (application) => application.id)
   applicaiton: Application;
+
+  @Column({ name: 'is_active', type: 'boolean', default: true })
+  isActive: boolean;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;

@@ -1,8 +1,5 @@
-import { template } from 'handlebars';
-import { type } from 'os';
 import { Template } from 'src/template/entities/template.entity';
 import { User } from 'src/user/entities/user.entity';
-import { Status } from 'src/utils/app-constants.utils';
 import {
   BaseEntity,
   Column,
@@ -11,7 +8,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
+  UpdateDateColumn
 } from 'typeorm';
 
 @Entity('tbl_application')
@@ -25,6 +22,9 @@ export class Application extends BaseEntity {
   @Column({ type: 'text' })
   description: string;
 
+  @Column({type: 'varchar'})
+  username : string;
+  
   @Column({ default: true, name: 'is_active' })
   isActive: boolean;
 

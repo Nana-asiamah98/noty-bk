@@ -1,12 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { TemplateService } from './template.service';
+import {
+  Body, Controller, Delete, Get, Param, Patch, Post
+} from '@nestjs/common';
 import { CreateTemplateDto } from './dto/create-template.dto';
 import { UpdateTemplateDto } from './dto/update-template.dto';
-import * as config from 'config';
+import { TemplateService } from './template.service';
 
-const versionConfig = config.get('version');
 
-@Controller(`/api/${versionConfig}/template`)
+@Controller(`/api/v1/template`)
 export class TemplateController {
   constructor(private readonly templateService: TemplateService) {}
 
@@ -26,7 +26,10 @@ export class TemplateController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTemplateDto: UpdateTemplateDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateTemplateDto: UpdateTemplateDto,
+  ) {
     return this.templateService.update(id, updateTemplateDto);
   }
 

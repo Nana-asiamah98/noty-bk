@@ -20,7 +20,6 @@ export class UserService {
       email,
       lastName,
     });
-    
 
     return this.userRepo.save(user);
   }
@@ -30,7 +29,7 @@ export class UserService {
   }
 
   findOne(id: string): Promise<User> {
-    this.logger.verbose(id)
+    this.logger.verbose(id);
     const user = this.userRepo.findOneBy({ id: id });
     if (!user) {
       throw new Exception('Failed To Fetch User');
@@ -51,15 +50,14 @@ export class UserService {
       return this.userRepo.save(user);
     }
 
-    return new User;
+    return new User();
   }
 
-  async toggleAccount(id: string) : Promise<String> {
+  async toggleAccount(id: string): Promise<String> {
     const user = await this.findOne(id);
-    if(user){
+    if (user) {
       user.isActive = !user.isActive;
       return `User ${user.userName} account has been deactivated`;
-
     }
     return `User ${user.id} account couldn't be deactivated`;
   }

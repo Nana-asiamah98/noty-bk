@@ -1,16 +1,12 @@
 import { IsEmail } from 'class-validator';
-import { type } from 'os';
 import { Application } from 'src/application/entities/application.entity';
-import { Status } from 'src/utils/app-constants.utils';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
   OneToMany,
-  PrimaryGeneratedColumn,
-  Unique,
-  UpdateDateColumn,
+  PrimaryGeneratedColumn, UpdateDateColumn
 } from 'typeorm';
 
 @Entity('tbl_user')
@@ -40,6 +36,6 @@ export class User extends BaseEntity {
   @UpdateDateColumn({ type: 'timestamptz', name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToMany(type => Application, application => application.user)
-  applications: Application[]
+  @OneToMany((type) => Application, (application) => application.user)
+  applications: Application[];
 }

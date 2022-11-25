@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Exception } from 'handlebars';
-import { ApplicationService } from 'src/application/application.service';
-import { Application } from 'src/application/entities/application.entity';
+import { ApplicationService } from '../application/application.service';
+import { Application } from '../application/entities/application.entity';
 import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
 import { CreateTemplateDto } from './dto/create-template.dto';
@@ -21,16 +21,15 @@ export class TemplateService {
     const { name, templateDescription, userId, applicationId } =
       createTemplateDto;
 
-    const user : User  = await this.userService.findOne(userId);
-    const application : Application = await this.applicationService.findOne(applicationId);
+    const user = await this.userService.findOne(userId);
+    const application = await this.applicationService.findOne(applicationId);
 
-    const createdTemplate = await this.templateRepository.save({
-      name,
-      templateDescription,
-      user,
-      application,
-    });
-
+    const template = new Template();
+    template.name = name;
+    template.applicaiton = application;
+    template.templateDescription = templateDescription;
+    template.user = user;
+    const createdTemplate: Template = await template.save();
     this.logger.verbose('Template Has Been Created Successfully');
     return createdTemplate;
   }

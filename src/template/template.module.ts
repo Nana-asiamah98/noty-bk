@@ -8,6 +8,6 @@ import { ApplicationModule } from 'src/application/application.module';
 @Module({
   imports: [UserModule, ApplicationModule],
   controllers: [TemplateController],
-  providers: [TemplateService, TemplateRepository]
+  providers: [TemplateService, TemplateRepository],
 })
 export class TemplateModule {}

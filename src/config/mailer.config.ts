@@ -1,5 +1,5 @@
 import { TransportType } from '@nestjs-modules/mailer/dist/interfaces/mailer-options.interface';
-import * as config from 'config';
+import config from 'config';
 
 const mailerConfig = config.get('mailer');
 
