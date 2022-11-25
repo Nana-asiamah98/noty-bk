@@ -1,5 +1,5 @@
 import { IsEmail } from 'class-validator';
-import { Application } from 'src/application/entities/application.entity';
+import { Application } from '../../application/entities/application.entity';
 import {
   BaseEntity,
   Column,

@@ -1,5 +1,5 @@
-import { Template } from 'src/template/entities/template.entity';
-import { User } from 'src/user/entities/user.entity';
+import { Template } from '../../template/entities/template.entity';
+import { User } from '../../user/entities/user.entity';
 import {
   BaseEntity,
   Column,
