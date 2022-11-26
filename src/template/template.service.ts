@@ -8,6 +8,7 @@ import { CreateTemplateDto } from './dto/create-template.dto';
 import { UpdateTemplateDto } from './dto/update-template.dto';
 import { Template } from './entities/template.entity';
 import { TemplateRepository } from './template.repository';
+import { templateTransformer } from 'src/utils/template.transformer';
 
 @Injectable()
 export class TemplateService {
@@ -21,13 +22,15 @@ export class TemplateService {
     const { name, templateDescription, userId, applicationId } =
       createTemplateDto;
 
+    const processedTemplate = await templateTransformer(templateDescription);
+
     const user = await this.userService.findOne(userId);
     const application = await this.applicationService.findOne(applicationId);
 
     const template = new Template();
     template.name = name;
     template.applicaiton = application;
-    template.templateDescription = templateDescription;
+    template.templateDescription = processedTemplate;
     template.user = user;
     const createdTemplate: Template = await template.save();
     this.logger.verbose('Template Has Been Created Successfully');
@@ -61,6 +64,8 @@ export class TemplateService {
     const { name, templateDescription, userId, applicationId, isActive } =
       updateTemplateDto;
 
+    const processedTemplate = await templateTransformer(templateDescription);
+
     const isTemplate: Template | boolean = (await this.findOne(id)) ?? false;
 
     if (isTemplate) {
@@ -70,7 +75,7 @@ export class TemplateService {
       isTemplate.name = name;
       isTemplate.applicaiton = application;
       isTemplate.isActive = isActive;
-      isTemplate.templateDescription = templateDescription;
+      isTemplate.templateDescription = processedTemplate;
       const updatedTemplate: Template = await this.templateRepository.save(
         isTemplate,
       );

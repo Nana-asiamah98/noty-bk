@@ -1,6 +1,6 @@
 export class CreateTemplateDto {
   name: string;
-  templateDescription: string;
+  templateDescription: TemplateSample;
   userId: string;
   applicationId: string;
 }

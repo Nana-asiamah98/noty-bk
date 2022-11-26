@@ -9,5 +9,6 @@ import { ApplicationModule } from 'src/application/application.module';
   imports: [UserModule, ApplicationModule],
   controllers: [TemplateController],
   providers: [TemplateService, TemplateRepository],
+  exports : [TemplateRepository,TemplateService]
 })
 export class TemplateModule {}

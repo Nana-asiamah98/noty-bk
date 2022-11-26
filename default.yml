@@ -21,6 +21,6 @@ mailer:
   secure: true
   auth:
     user: 'nastudio96@gmail.com'
-    password: 'ptdbiexnmrfjklfr'
+    pass: 'ptdbiexnmrfjklfr'
 
 version: 'v1'

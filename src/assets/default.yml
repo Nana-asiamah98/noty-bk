@@ -15,12 +15,13 @@ keycloak:
   useNestLogger: false
 
 mailer:
-  service: 'gmail'
-  host: 'smtp.gmail.com'
-  port: 25
-  secure: true
-  auth:
-    user: 'nastudio96@gmail.com'
-    password: 'ptdbiexnmrfjklfr'
+  transport:
+    service: 'gmail'
+    host: 'smtp.gmail.com'
+    port: 25
+    secure: true
+    auth:
+      user: 'nastudio96@gmail.com'
+      pass: 'ptdbiexnmrfjklfr'
 
 version: 'v1'

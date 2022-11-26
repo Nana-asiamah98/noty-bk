@@ -15,7 +15,6 @@ export class DatabaseConfig implements TypeOrmOptionsFactory {
     const config = this.configService.get('db');
     config.entities = [__dirname + '/../**/*.entity.{ts,js}'];
     config.migrations = [__dirname + '/../**/migrations/*.{ts,js}'];
-    console.log({config})
     return config;
   }
 }
