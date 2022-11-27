@@ -21,6 +21,9 @@ export class Template extends BaseEntity {
   @Column({ name: 'template_description', type: 'text' })
   templateDescription: string;
 
+  @Column({name : "template_id" , type : "varchar", unique: true, nullable: true})
+  templateId : string;
+
   @ManyToOne((type) => User, (user) => user.id)
   user: User;
 
@@ -29,6 +32,7 @@ export class Template extends BaseEntity {
 
   @Column({ name: 'is_active', type: 'boolean', default: true })
   isActive: boolean;
+
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;

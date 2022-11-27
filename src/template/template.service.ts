@@ -9,6 +9,7 @@ import { UpdateTemplateDto } from './dto/update-template.dto';
 import { Template } from './entities/template.entity';
 import { TemplateRepository } from './template.repository';
 import { templateTransformer } from 'src/utils/template.transformer';
+import { templateIdGenerator } from 'src/utils/template-generator.utils';
 
 @Injectable()
 export class TemplateService {
@@ -29,6 +30,7 @@ export class TemplateService {
 
     const template = new Template();
     template.name = name;
+    template.templateId = await templateIdGenerator(application.name);
     template.applicaiton = application;
     template.templateDescription = processedTemplate;
     template.user = user;
@@ -56,6 +58,16 @@ export class TemplateService {
     });
     if (!template) {
       throw new Exception(`There is no template with the ID ${id}`);
+    }
+    return template;
+  }
+
+  async findByTemplateId(templateId: string): Promise<Template> | null {
+    const template: Template = await this.templateRepository.findOneBy({
+      templateId: templateId,
+    });
+    if (!template) {
+      throw new Exception(`There is no template with the ID ${templateId}`);
     }
     return template;
   }

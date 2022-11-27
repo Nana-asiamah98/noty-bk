@@ -7,6 +7,6 @@ export class MailController {
   constructor(private mailService: MailService) {}
   @Post('/send-mail-test')
   async sendMailTest(@Body() mailDto: MailDto): Promise<string> | null {
-    return await this.mailService.sendMail(mailDto.id, mailDto);
+    return await this.mailService.sendMail(mailDto.templateId, mailDto);
   }
 }

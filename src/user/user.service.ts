@@ -29,7 +29,6 @@ export class UserService {
   }
 
   findOne(id: string): Promise<User> {
-    this.logger.verbose(id);
     const user = this.userRepo.findOneBy({ id: id });
     if (!user) {
       throw new Exception('Failed To Fetch User');

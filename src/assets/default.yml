@@ -5,7 +5,7 @@ db:
   username: 'nana'
   password: '4rfv%TGB'
   database: 'noty'
-  synchronize: false
+  synchronize: true
 
 keycloak:
   authServerUrl: 'http://192.168.251.101:8070/auth'

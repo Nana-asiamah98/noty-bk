@@ -18,18 +18,19 @@ export class MailService {
 
   async sendMail(templateId: string, mailInfo: MailDto): Promise<string> {
     try {
-      const { templateDescription } = await this.templateService.findOne(
+      const { templateDescription, name } = await this.templateService.findByTemplateId(
         templateId,
       );
       /* const transformedTemplate: string = await templateTransformer(
       templateDescription
     ); */
+    this.logger.verbose(`Templte Name ${name} Has Been Generated`);
       const handlerBarsTemplate = Handlebars.compile(templateDescription);
       const mainTemplate = handlerBarsTemplate({
-        name: 'Ama Sefah 😍',
+        name: 'Kojo Asiamah',
       });
       const { to, from, subject, text } = mailInfo;
-      this.logger.verbose('[ABOUT TO SEND MAIL]');
+      this.logger.verbose(`[ABOUT TO SEND MAIL TO ${to}]`);
       const sentMail = await this.mailService.sendMail({
         to,
         from,

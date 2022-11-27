@@ -1,5 +1,5 @@
 export class MailDto {
-  id: string;
+  templateId: string;
   subject?: string;
   text?: string;
   to?: string;

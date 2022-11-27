@@ -8,23 +8,29 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from 'typeorm';
+import { IsEmpty, IsNotEmpty, IsString } from 'class-validator';
 
 @Entity('tbl_application')
 export class Application extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @IsNotEmpty()
+  @IsString()
+  @Column({ type: 'varchar', unique: true, nullable: true })
   name: string;
 
-  @Column({ type: 'text' })
+  @IsString()
+  @IsEmpty()
+  @Column({ type: 'text', unique: false, nullable : false })
   description: string;
 
-  @Column({type: 'varchar'})
-  username : string;
-  
+  @Column({ type: 'varchar', unique: true, nullable: true })
+  @IsNotEmpty()
+  username: string;
+
   @Column({ default: true, name: 'is_active' })
   isActive: boolean;
 
