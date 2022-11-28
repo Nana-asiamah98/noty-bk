@@ -10,5 +10,16 @@ export type KeyCloakModuleConfigType = {
 };
 
 export interface KeyCloakModuleConfigInterface {
-  createKeyCloakModule(KeyCloakModuleConfigInterface? : any): KeycloakConnectConfig | Promise<KeycloakConnectConfig>;
+  createKeyCloakModule(
+    KeyCloakModuleConfigInterface?: any,
+  ): KeycloakConnectConfig | Promise<KeycloakConnectConfig>;
+}
+
+export class KeycloakUserDto {
+  id: string;
+  username: string;
+  enabled: boolean;
+  firstName: string;
+  lastName: string;
+  email?: string;
 }

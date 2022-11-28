@@ -9,5 +9,7 @@ import { AuthService } from './auth.service';
       useClass: AuthService,
     }),
   ],
+  providers: [AuthService],
+  exports: [AuthService]
 })
 export class AuthModule {}

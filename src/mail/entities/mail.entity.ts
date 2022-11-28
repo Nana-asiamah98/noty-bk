@@ -1,7 +1,9 @@
+import { User } from 'src/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -24,6 +26,9 @@ export class Mail {
 
   @Column({ type: 'varchar', name: 'receiver', nullable: true })
   receiver: string;
+
+  @ManyToOne((type) => User, (user) => user.id)
+  createdBy : User;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
