@@ -14,3 +14,17 @@ export const templateTransformer = async (
 
   return await sampleTemplate;
 };
+
+export const getMessageId = async (messageId) : Promise<string> => {
+  const res : string[] = messageId
+    .replace("/^'/i", "")
+    .replace("<", "")
+    .replace(">", "")
+    .split("@");
+
+    if(res.length > 1){
+      return await res[0];
+    }
+
+    return  await "NA";
+};

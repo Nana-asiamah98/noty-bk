@@ -1,34 +1,36 @@
-export const templateIdGenerator = async ( categoryName : string) : Promise<string> => {
-    const time = new Date().getTime().toString();
+export const templateIdGenerator = async (
+  categoryName: string,
+): Promise<string> => {
+  const time = new Date().getTime().toString();
 
-  let firstAndLastChar : string = "";
+  let firstAndLastChar: string = '';
 
-  const splitCategory = categoryName.split(" ");
+  const splitCategory = categoryName.split(' ');
   if (splitCategory.length > 1) {
     firstAndLastChar = categoryName
-      .split(" ")
+      .split(' ')
       .map((val, ind) => {
-        const splitWords = val.split("");
+        const splitWords = val.split('');
         return splitWords[0];
       })
       .map((val, ind) => {
         return val.toUpperCase();
       })
-      .join("")
+      .join('')
       .concat(time.slice(-6));
     return firstAndLastChar;
   } else {
     firstAndLastChar = categoryName
-      .split("")
+      .split('')
       .map((val, ind, arr) => {
         if (ind === 0 || ind === arr.length - 1) return val.toUpperCase();
       })
-      .join("")
+      .join('')
       .concat(time.slice(-6));
     return firstAndLastChar;
   }
 
-    /* const firstAndLastChar : string = await categoryName
+  /* const firstAndLastChar : string = await categoryName
       .split("")
       .map((val, ind, arr) => {
         if (ind === 0 || ind === arr.length - 1) return val.toUpperCase();
@@ -37,4 +39,4 @@ export const templateIdGenerator = async ( categoryName : string) : Promise<stri
       .concat(time.slice(-6));
   
     return firstAndLastChar; */
-}
+};
