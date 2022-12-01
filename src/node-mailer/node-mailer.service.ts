@@ -10,5 +10,3 @@ export class NodeMailerService implements MailerOptionsFactory {
     return config;
   }
 }
-
-

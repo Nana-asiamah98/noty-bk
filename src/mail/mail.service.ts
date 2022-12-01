@@ -41,7 +41,7 @@ export class MailService {
       this.logger.verbose(`Templte Name ${name} Has Been Generated`);
       const handlerBarsTemplate = Handlebars.compile(templateDescription);
       const mainTemplate = handlerBarsTemplate({
-        name: 'Adwamanhene!! 😜',
+        name: 'Sikani 😜',
       });
       const { to, from, text } = mailInfo;
       const subject = name;
@@ -82,7 +82,7 @@ export class MailService {
       status,
       to,
       receiver,
-      createdBy
+      createdBy,
     });
     this.mailRepository.save(mailResult);
     this.logger.verbose('[MAIL SAVED]');

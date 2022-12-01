@@ -13,8 +13,6 @@ import { CreateApplicationDto } from './dto/create-application.dto';
 import { UpdateApplicationDto } from './dto/update-application.dto';
 import * as config from 'config';
 
-
-
 @Controller(`/api/v1/application`)
 export class ApplicationController {
   constructor(private readonly applicationService: ApplicationService) {}

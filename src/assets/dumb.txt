@@ -1,18 +1,17 @@
 db:
   type: 'postgres'
-  host: 'dpg-ce4ej514reb6t8cl1bdg-a.oregon-postgres.render.com'
+  host: '192.168.251.101'
   port: '5432'
   username: 'nana'
-  password: 'sxbiz4FkaxOkbuY3YiHX7CGhMXUZ1Oqq'
+  password: '4rfv%TGB'
   database: 'noty'
   synchronize: true
-  ssl: true
 
 keycloak:
-  authServerUrl: 'https://lemur-18.cloud-iam.com/auth/'
-  realm: 'noty'
+  authServerUrl: 'http://192.168.251.101:8070/auth'
+  realm: 'nest-test'
   clientId: 'nest-test'
-  secret: 'WfG06ApPeHoqkEnaVo6CfqgsURLE3tr0'
+  secret: '3ab0a4cb-f34e-4a04-8af7-9edbeb711336'
   useNestLogger: false
 
 mailer:
