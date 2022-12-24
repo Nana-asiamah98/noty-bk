@@ -1,12 +1,20 @@
 import {
-  Body, Controller, Delete, Get, Param, Patch, Post
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
+import { ApiOAuth2, ApiTags } from '@nestjs/swagger/dist';
 import { CreateTemplateDto } from './dto/create-template.dto';
 import { UpdateTemplateDto } from './dto/update-template.dto';
 import { TemplateService } from './template.service';
 
-
 @Controller(`/api/v1/template`)
+@ApiOAuth2(['profile:write'])
+@ApiTags('Templates')
 export class TemplateController {
   constructor(private readonly templateService: TemplateService) {}
 

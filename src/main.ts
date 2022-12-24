@@ -11,7 +11,8 @@ async function bootstrap() {
   const configService = app.get<ConfigService>(ConfigService);
   const keycloakConfig = configService.get('keycloak');
 
-  /* SETTING UP SWAGGER */
+  /* [START] SETTING UP SWAGGER */
+  /* Setting Up Swagger Document Builder */
   const config = new DocumentBuilder()
     .addOAuth2({
       type: 'oauth2',
@@ -27,14 +28,20 @@ async function bootstrap() {
       },
     })
     .setTitle('Noty Endpoints')
-    .setDescription('The Cats API Description')
+    .setDescription(
+      'This is a backend service for creating a email template and submitting emails.',
+    )
     .setVersion('1.0')
-    .addTag('noty')
     .build();
 
+  /* Create A Swagger Document */
   const document = SwaggerModule.createDocument(app, config);
+
+  /* Setting Up The Swagger Module In Nest JS */
   SwaggerModule.setup('api', app, document, {
+    customSiteTitle: 'Noty Endpoints',
     swaggerOptions: {
+      persistAuthorization: true,
       oauth2RedirectUrl: 'http://localhost:3000/api/oauth2-redirect.html',
       initOAuth: {
         clientId: keycloakConfig.cliendId,
@@ -43,7 +50,7 @@ async function bootstrap() {
       },
     },
   });
-  /* SETTING UP SWAGGER */
+  /* [CLOSE] SETTING UP SWAGGER */
 
   await app.listen(3000);
 }

@@ -2,7 +2,9 @@ import { Status } from 'src/utils/app-constants.utils';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Username For The User Should Be Unique',
+  })
   userName: string;
 
   @ApiProperty()

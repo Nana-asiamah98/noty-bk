@@ -12,8 +12,11 @@ import { ApplicationService } from './application.service';
 import { CreateApplicationDto } from './dto/create-application.dto';
 import { UpdateApplicationDto } from './dto/update-application.dto';
 import * as config from 'config';
+import { ApiOAuth2, ApiTags } from '@nestjs/swagger/dist';
 
 @Controller(`/api/v1/application`)
+@ApiOAuth2(['profile:write'])
+@ApiTags('Application')
 export class ApplicationController {
   constructor(private readonly applicationService: ApplicationService) {}
 
