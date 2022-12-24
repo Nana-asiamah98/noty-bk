@@ -11,8 +11,10 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as config from 'config';
+import { ApiOAuth2 } from '@nestjs/swagger/dist';
 
-const versionConfig = "v1";
+const versionConfig = 'v1';
+@ApiOAuth2(['profile:write'])
 @Controller(`/api/${versionConfig}/user`)
 export class UserController {
   constructor(private readonly userService: UserService) {}
