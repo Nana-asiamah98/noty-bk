@@ -11,7 +11,10 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as config from 'config';
-import { ApiOAuth2, ApiTags } from '@nestjs/swagger/dist';
+import { ApiBody, ApiOAuth2, ApiTags } from '@nestjs/swagger/dist';
+import { ValidationPipe } from '@nestjs/common/pipes';
+import { UsePipes } from '@nestjs/common/decorators';
+import { UserStatusValidationPipe } from './pipes/user-status-validation-pipes';
 
 const versionConfig = 'v1';
 @ApiOAuth2(['profile:write'])
@@ -21,6 +24,10 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
+  @ApiBody({
+    type: CreateUserDto,
+  })
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }

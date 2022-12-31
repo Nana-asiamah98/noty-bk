@@ -16,6 +16,8 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .addOAuth2({
       type: 'oauth2',
+      name: 'Keycloak Integration',
+      description: 'Keycloak Authentication and Authorization',
       flows: {
         authorizationCode: {
           authorizationUrl: `${keycloakConfig.authServerUrl}/realms/${keycloakConfig.realm}/protocol/openid-connect/auth`,
@@ -44,7 +46,7 @@ async function bootstrap() {
       persistAuthorization: true,
       oauth2RedirectUrl: 'http://localhost:3000/api/oauth2-redirect.html',
       initOAuth: {
-        clientId: keycloakConfig.cliendId,
+        clientId: keycloakConfig.clientId,
         clientSecret: keycloakConfig.secret,
         realm: keycloakConfig.realm,
       },

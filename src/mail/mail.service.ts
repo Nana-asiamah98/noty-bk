@@ -38,11 +38,13 @@ export class MailService {
       const createdBy = await this.fetchUser(authDto);
       const { templateDescription, name } =
         await this.templateService.findByTemplateId(templateId);
+      const { templateParameters } = mailInfo;
+      console.log({ templateParameters });
       this.logger.verbose(`Templte Name ${name} Has Been Generated`);
       const handlerBarsTemplate = Handlebars.compile(templateDescription);
-      const mainTemplate = handlerBarsTemplate({
-        name: 'Sikani 😜',
-      });
+      const mainTemplate = handlerBarsTemplate(templateParameters);
+      console.log({ mainTemplate });
+
       const { to, from, text } = mailInfo;
       const subject = name;
       this.logger.verbose(`[ABOUT TO SEND MAIL TO ${to}]`);

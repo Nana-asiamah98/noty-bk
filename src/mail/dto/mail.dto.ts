@@ -4,6 +4,8 @@ export class MailDto {
   @ApiProperty()
   templateId: string;
   @ApiProperty()
+  templateParameters: {};
+  @ApiProperty()
   subject?: string;
   @ApiProperty()
   text?: string;

@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Exception } from 'handlebars';
 import { ApplicationService } from '../application/application.service';
 import { Application } from '../application/entities/application.entity';
@@ -67,7 +67,9 @@ export class TemplateService {
       templateId: templateId,
     });
     if (!template) {
-      throw new Exception(`There is no template with the ID ${templateId}`);
+      throw new NotFoundException(
+        `There is no template with the ID ${templateId}`,
+      );
     }
     return template;
   }
@@ -96,6 +98,30 @@ export class TemplateService {
     }
 
     return new Template();
+  }
+
+  async fetchTemplateParameters(templateId: string): Promise<object | any> {
+    const { templateDescription, name } = await this.findByTemplateId(
+      templateId,
+    );
+
+    const matchedValues: string[] = templateDescription.match(/{{.*?}}/gm);
+
+    const parameters: string[] | any = matchedValues.map((val) => {
+      return val?.replace('}}', '').replace('{{', '').trim();
+    });
+
+    const templateObjectAndParameters: {} | any = Object.fromEntries(
+      parameters.map((templateName) => [templateName, 'string']),
+    );
+
+    const finalTemplateObject = {
+      templateName: name,
+      templtaetId: templateId,
+      templateParameters: templateObjectAndParameters,
+    };
+
+    return finalTemplateObject;
   }
 
   async activeToggle(id: string): Promise<Template | boolean> {

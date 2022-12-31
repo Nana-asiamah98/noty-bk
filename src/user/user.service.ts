@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common/exceptions';
 import { Exception } from 'handlebars/runtime';
 import { find } from 'rxjs';
 import { Status } from 'src/utils/app-constants.utils';
@@ -28,10 +29,10 @@ export class UserService {
     return this.userRepo.find();
   }
 
-  findOne(id: string): Promise<User> {
-    const user = this.userRepo.findOneBy({ id: id });
+  async findOne(id: string): Promise<User> {
+    const user = await this.userRepo.findOneBy({ id: id });
     if (!user) {
-      throw new Exception('Failed To Fetch User');
+      throw new NotFoundException(`User of ${id} not found!!`);
     }
 
     return user;

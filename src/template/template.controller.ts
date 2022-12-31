@@ -7,7 +7,8 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiOAuth2, ApiTags } from '@nestjs/swagger/dist';
+import { ApiOAuth2, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
+import { template } from 'handlebars';
 import { CreateTemplateDto } from './dto/create-template.dto';
 import { UpdateTemplateDto } from './dto/update-template.dto';
 import { TemplateService } from './template.service';
@@ -21,6 +22,12 @@ export class TemplateController {
   @Post()
   create(@Body() createTemplateDto: CreateTemplateDto) {
     return this.templateService.create(createTemplateDto);
+  }
+
+  @Get('/:templateId/template')
+  @ApiTags('Fetch All Parameters From A Template')
+  async findTemplate(@Param('templateId') templateId: string) {
+    return this.templateService.fetchTemplateParameters(templateId);
   }
 
   @Get()
